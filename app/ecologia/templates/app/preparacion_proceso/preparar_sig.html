@@ -1,0 +1,50 @@
+{%extends "app/base.html"%}
+{%load tag%}
+{%block head%}
+<!--
+JS ECOLOGIA
+-->
+<script src="/site_media/js/jquery.blockUI.js"></script>
+
+{%endblock%}
+
+{%block home%}/ecologia/preparacion/{%endblock%}
+{%block home_title%}Menu{%endblock%}
+
+{%block title%}Preparar SIG{%endblock%}
+
+{%block body_app%}
+
+<div style="display:table;width: 100%; padding-top: 5px; padding-bottom: 50px">
+
+	<center>
+		<form action="" method="POST">
+			{% csrf_token %}
+			<p style="color: #81017E;">{{savedDesc}}</p>
+			<table class="rol">
+				
+				{{prepararSigForm.as_table}}
+				<!--
+				<tr>
+					<td colspan="2" style="color: red;">{{field.error}}</td>
+				</tr>
+				{% for field in prepararSigForm %}
+
+				<td> {{ field.label_tag }}
+				<br/>
+				{{ field }} </td>
+
+				{% endfor %}
+				-->
+				<tr>
+					<td id='btn' colspan="2">
+					<input type="submit" value="Guardar" />
+					</td>
+				</tr>
+
+			</table>
+		</form>
+	</center>
+
+</div>
+{%endblock%} 

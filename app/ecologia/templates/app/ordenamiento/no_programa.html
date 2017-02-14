@@ -1,0 +1,49 @@
+{%extends "base.html"%}
+
+{%block head%}
+<script>
+	$(function() {
+		$("#dialog").dialog({
+			autoOpen : true,
+			height : 200,
+			width : 300,
+			show : "fade",
+			hide : "fade",
+			resizable : false,
+			draggable : false,
+			modal : true,
+			
+			buttons : {
+				"Aceptar" : function() {
+					{% ifequal root2 1 %}
+						$(location).attr('href', "/ecologia/administracion/");
+					{% endifequal %}
+					{% ifequal root2 0 %}
+						$(location).attr('href', "/ecologia/logout");
+					{% endifequal %}
+					
+					$(this).dialog("close");
+				}
+			},
+			close : function(event, ui) {
+				$(location).attr('href', "/ecologia/logout");
+			}
+		});
+	});
+
+</script>
+{%endblock%}
+
+{%block body%}
+<div id="dialog" title="Ordenamiento ecol&oacute;gico">
+	<p style="text-align: center; padding-top: 20px">		
+		{% ifequal root2_supervisor 1 %}
+			A&uacute;n no se tienen sectores asociados a operadores para este proceso de ordenamiento.
+		{% endifequal %}
+		
+		{% ifequal root2_supervisor 0 %}
+			Por el momento no dispone de procesos de ordenamiento ecol&oacute;gico
+		{% endifequal %}
+	</p>
+</div>
+{%endblock%} 

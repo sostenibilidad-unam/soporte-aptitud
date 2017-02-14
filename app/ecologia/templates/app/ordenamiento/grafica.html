@@ -1,0 +1,156 @@
+<div style="display: table; text-align: center; padding-top: 5px; padding-bottom: 10px">
+	<div style="float: left; width: 14%;">
+		<button  id="1" class="btn_transparent" onclick="javascript:show_jqplot(JSPLOT.CRECIENTE_CX)" title="Agregar" >
+			<img  src="/site_media/img/gra_creciente_cx.png">
+			<img  src="/site_media/img/gra_creciente_cx_.png" style="display:none">
+		</button>
+		<label>Creciente CX</label>
+	</div>
+	<div style="float: left; width: 14%;">
+		<button id="2" class="btn_transparent" onclick="javascript:show_jqplot(JSPLOT.DECRECIENTE_CX)" title="Agregar">
+			<img src="/site_media/img/gra_decreciente_cx.png">
+			<img src="/site_media/img/gra_decreciente_cx_.png" style="display:none">
+		</button>
+		<label>Decreciente CX</label>
+	</div>
+	<div style="float: left; width: 14%;">
+		<button id="3" class="btn_transparent" onclick="javascript:show_jqplot(JSPLOT.DECRECIENTE_CV)" title="Agregar">
+			<img src="/site_media/img/gra_decreciente_cv.png">
+			<img src="/site_media/img/gra_decreciente_cv_.png" style="display:none">
+		</button>
+		<label>Decreciente CV</label>
+	</div>
+	<div style="float: left; width: 14%;">
+		<button id="4" class="btn_transparent" onclick="javascript:show_jqplot(JSPLOT.CRECIENTE_CV)" title="Agregar">
+			<img src="/site_media/img/gra_creciente_cv.png">
+			<img src="/site_media/img/gra_creciente_cv_.png" style="display:none">
+		</button>
+		<label>Creciente CV</label>
+	</div>
+	<div style="float: left; width: 14%;">
+		<button id="5" class="btn_transparent" onclick="javascript:show_jqplot(JSPLOT.CAMPANA)" title="Agregar">
+			<img src="/site_media/img/gra_campana.png">
+			<img src="/site_media/img/gra_campana_.png" style="display:none">
+		</button>
+		<label>Campana</label>
+	</div>
+	<div style="float: left; width: 14%;">
+		<button id="6" class="btn_transparent" onclick="javascript:show_jqplot(JSPLOT.CAMPANA_INV)" title="Agregar">
+			<img src="/site_media/img/gra_campana_inv.png">
+			<img src="/site_media/img/gra_campana_inv_.png" style="display:none">
+		</button>
+		<label>Campana Inversa</label>
+	</div>
+	<div style="float: left; width: 14%;">
+		<button id="7" class="btn_transparent" onclick="javascript:show_jqplot(JSPLOT.DIFUSA)" title="Agregar">
+			<img src="/site_media/img/gra_difusa.png">
+			<img src="/site_media/img/gra_difusa_.png" style="display:none">
+		</button>
+		<label>Coseno</label>
+	</div>
+</div>
+
+
+<!--
+<div id="rad_grafica">
+	<input type="radio" id="rad_img" name="rad_grp_grafica" checked="checked" />
+	<label for="rad_img"><img src="/site_media/img/gra_difusa.png"></label>
+	
+	<input type="radio" id="rad_img2" name="rad_grp_grafica" />
+	<label for="rad_img2">Informaci&oacute;n</label>
+</div>
+-->
+
+
+
+
+<div id="id_panel" style="display: table; margin: auto; width: 100%;padding-top: 10px">
+	<div style="float: center; width: 100%">
+		<span id="graph_name_capa" style="color: #81017E;">Capa: </span> <span id="graph_name_capa_val"></span>		
+		<br/>
+		<span id="graph_values_capa" style="color: #81017E;">Valores capa: </span> <span id="graph_values_capa_val"></span>		
+		<div style="height: 20px;"></div>
+	</div>
+	<div style="float: left; width: 30%">
+		<div align="center" id="div_min_max" style="display:none;padding-top: 20px">
+			<div style="padding-bottom: 10px">
+				Escala
+			</div>
+			<label>Min: </label>
+			<input id="txt_min" type="number" size="2"/>
+			<label style="padding-left: 10px">Max: </label>
+			<input id="txt_max" type="number" size="2" />
+			<div style="padding-bottom: 10px"></div>
+			<div id="sld_min_max" class="slider"></div>
+		</div>
+		<div align="center" id="div_min_max_difusa" style="display:none;padding-top: 20px">
+			<div style="padding-bottom: 10px">
+				Escala
+			</div>
+			<label>Min: </label>
+			<input id="txt_min_difusa" type="number" size="2"/>
+			<label style="padding-left: 10px">Max: </label>
+			<input id="txt_max_difusa" type="number" size="2" value="1"/>
+			<div style="padding-bottom: 10px"></div>
+			<div id="sld_min_max_difusa" class="slider"></div>
+		</div>
+		<div id="div_xmax" style="display:none;padding-top: 20px">
+			<label>Xmax: </label>
+			<input id="txt_xmax" type="number" size="2" />
+			<div style="padding-bottom: 10px"></div>
+			<div id="sld_xmax" class="slider"></div>
+		</div>
+		<div id="div_xmin" style="display:none;padding-top: 20px">
+			<label>Xmin: </label>
+			<input id="txt_xmin" type="number" size="2" />
+			<div style="padding-bottom: 10px"></div>
+			<div id="sld_xmin" class="slider"></div>
+		</div>
+		<div id="div_amplitud" style="display:none;padding-top: 20px" >
+			<label>Amplitud: </label>
+			<input id="txt_amplitud" type="number" size="2" />
+			<div style="padding-bottom: 10px"></div>
+			<div id="sld_amplitud" class="slider"></div>
+		</div>
+		<div id="div_saturacion" style="display:none;padding-top: 20px" value="20">
+			<label>Saturaci&oacute;n: </label>
+			<input id="txt_saturacion" type="number" size="2" />
+			<div style="padding-bottom: 10px"></div>
+			<div id="sld_saturacion" class="slider"></div>
+		</div>
+		<div id="div_difusa_a" style="display:none;padding-top: 20px" value="20">
+			<label>A: </label>
+			<input id="txt_difusa_a" type="number" size="2" />
+			<div style="padding-bottom: 10px"></div>
+			<div id="sld_difusa_a" class="slider"></div>
+		</div>
+		<div id="div_difusa_b" style="display:none;padding-top: 20px" value="20">
+			<label>B: </label>
+			<input id="txt_difusa_b" type="number" size="2" />
+			<div style="padding-bottom: 10px"></div>
+			<div id="sld_difusa_b" class="slider"></div>
+		</div>
+		<div id="div_difusa_c" style="display:none;padding-top: 20px" value="20">
+			<label>C: </label>
+			<input id="txt_difusa_c" type="number" size="2" />
+			<div style="padding-bottom: 10px"></div>
+			<div id="sld_difusa_c" class="slider"></div>
+		</div>
+		<div id="div_difusa_d" style="display:none;padding-top: 20px" value="20">
+			<label>D: </label>
+			<input id="txt_difusa_d" type="number" size="2" />
+			<div style="padding-bottom: 10px"></div>
+			<div id="sld_difusa_d" class="slider"></div>
+		</div>
+	</div>
+	<div style="float:right ; width: 65%">
+		<div class="graph" id="graph" >
+			<div  id="chart1"></div>
+		</div>
+		<div id="mf" style="display:none; text-align: center; padding-top: 40px"  >
+			<button  id="btn_mapa_valor">
+				Generar mapa de funci&oacute;n valor
+			</button>
+		</div>
+	</div>
+</div>

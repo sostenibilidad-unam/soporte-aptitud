@@ -1,0 +1,35 @@
+{%extends "base.html"%}
+{%load tag%}
+
+{%block head%}
+{%endblock%}
+
+{%block body%}
+
+{# Tool Bar #}
+<div class="custom-header">
+	<div style="float:left; width: 10%">
+		<a href={%block home%}{%endblock%}><img src="/site_media/img/home48.png" title={%block home_title%}{%endblock%}></a>
+	</div>
+	<div align="center" style="float:left; width: 80%">
+		<h1>{%block title%}{%endblock%}</h1>
+	</div>
+	<div align="right" style="float:right; width: 10%">
+		<a style="text-decoration: none;color: #000000;" href="/ecologia/logout/"> Cerrar sesi&oacute;n
+		<br>
+		{{user.username}}</a>
+	</div>
+	{% ifequal request.session.canSeeProgramName True %}		
+		{% ifnotequal request.session.admin_selectd_program_id None %}
+			<div align="right" style="float:right; width: 10%;overflow: hidden; height:60px;" title='{{request.session.admin_selectd_program_name}}' >
+				<b>Proceso: </b> {{request.session.admin_selectd_program_name}}
+			</div>
+		{% endifnotequal %}
+	{% endifequal %}
+
+</div>
+{# Main #}
+<div id='body-app'>
+	{%block body_app%}{%endblock%}
+</div>
+{%endblock%} 

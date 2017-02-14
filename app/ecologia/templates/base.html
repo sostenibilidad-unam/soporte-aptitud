@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<meta charset="utf-8">
+	<title>Ordenamiento ecol&oacute;gico</title>
+	<link rel="shortcut icon" href="/site_media/img/gob.jpg">
+	<!--
+	JQUERY
+	-->
+	<link rel="stylesheet" href="/site_media/lib/ui-jquery/css/custom-theme/jquery-ui-1.8.18.custom.css" type="text/css">
+	<script src="/site_media/lib/ui-jquery/js/jquery-1.7.1.min.js"></script>
+	<script src="/site_media/lib/ui-jquery/js/jquery-ui-1.8.18.custom.min.js"></script>
+	<!--
+	ECOLOGIA
+	-->
+	<script src="/site_media/js/ecologia.js"></script>
+	<link rel="stylesheet" href="/site_media/css/ecologia.css" type="text/css">
+	<!--
+	OTRO
+	-->
+	<link rel="stylesheet" href="/site_media/css/loading_ajax.css" type="text/css">
+	<!--
+	JQUERY AJAX FORM
+	-->
+	<script src="/site_media/lib/jquery.form.js"></script>
+	<script type="text/javascript">
+		function ajax(url, data, success) {
+			error = false;
+			data['csrfmiddlewaretoken'] = '{{ csrf_token }}';
+			show_overlay();
+
+			$.ajax({
+				type : 'post',
+				data : data,
+				url : url,
+				success : success,
+				complete : function(evt) {
+					if(!error) {
+					}
+					hide_overlay();
+				},
+				error : function(evt) {
+					error = true
+				}
+			});
+		}
+
+		function ajax_sync(url, data, success) {
+			error = false;
+			data['csrfmiddlewaretoken'] = '{{ csrf_token }}';
+			show_overlay();
+
+			$.ajax({
+				type : 'post',
+				data : data,
+				url : url,
+				success : success,
+				async:false,
+				complete : function(evt) {
+					if(!error) {
+					}
+					hide_overlay();
+				},
+				error : function(evt) {
+					error = true
+				}
+			});
+		}
+
+		function ajax_form(f, url, success) {
+			show_overlay();
+
+			$(f).attr('action', url);
+			$(f).attr('method', 'post');
+
+			$(f).ajaxForm({
+				dataType : 'json',
+				//resetForm : true,
+				success : function(responseText, statusText, xhr, $form) {
+					if( statusText = "success") {
+						success(responseText);
+					}
+					hide_overlay();
+					return false;
+				}
+			});
+		}
+	</script>
+	{%block head%}{%endblock%}
+	</head>
+	<body>
+		<div id="header">
+			<img src="/site_media/img/encabezado.jpg" border="0" />
+		</div>
+		<div id="content" >
+			{%block body%}{%endblock%}
+			<div id="floatingBarsG">
+				<div class='blockG' id='rotateG_01'></div>
+				<div class='blockG' id='rotateG_02'></div>
+				<div class='blockG' id='rotateG_03'></div>
+				<div class='blockG' id='rotateG_04'></div>
+				<div class='blockG' id='rotateG_05'></div>
+				<div class='blockG' id='rotateG_06'></div>
+				<div class='blockG' id='rotateG_07'></div>
+				<div class='blockG' id='rotateG_08'></div>
+			</div>
+			<div id="overlay"></div>
+		</div>
+		<div id="footer">
+			<img src="/site_media/img/pie.jpg" border="0" />
+		</div>
+	</body>
+</html>

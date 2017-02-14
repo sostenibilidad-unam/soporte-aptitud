@@ -1,0 +1,393 @@
+input[type='text'], input[type='password'] {
+	border-radius:7px;
+	width:220px;
+	height:22px;
+	color:#81017E;
+	border:1px solid #d6d6d6;
+	background-color:#F5F5F5;
+}
+input[type='number'] {
+	border-radius:7px;
+	width:50px;
+	height:22px;
+	color:#81017E;
+	border:1px solid #d6d6d6;
+	background-color:#F5F5F5;
+}
+select {
+	border-radius:3px;
+	border:none;
+	border:1px solid #d6d6d6;
+	background:white;
+	color:#81017E;
+	background-color:#F5F5F5;
+	padding:3px 0 3px 0;
+	overflow:hidden;
+}
+a {
+	text-decoration:none;
+}
+/*
+ * remover line 333 de css jquery-ui de select para accordion padding: 1em 2.2em;
+ */
+/* login
+ ----------------------------------*/
+.login {
+	width:200px;
+	height:250px;
+	padding:35px 80px 0px 80px;
+	margin:auto;
+	color:#ebebeb;
+	background:url(/site_media/img/login-box-backg.png) no-repeat left top;
+}
+.login ul {
+	list-style-type:none;
+	padding:0;
+}
+.login li label {
+	display:block;
+	text-align:left;
+	padding-bottom:5px;
+}
+.login li {
+	padding-bottom:12px;
+}
+.login #btn {
+	text-align:center;
+	padding-top:10px;
+}
+.login p {
+	text-align:center;
+}
+.custom-header {
+	background-color:#EEEEEE;
+	display:table;
+	width:100%;
+}
+txt {
+	font-size:150%;
+	font-weight:bold;
+	line-height:1;
+	margin-bottom:10px;
+}
+
+.lst_cartografica {
+	height:487px;
+	width:100%;
+	overflow:auto;
+}
+
+.lst_cartografica_admin {
+	height:60px;
+	width:100%;
+	overflow:hidden;
+}
+
+/* sub-sector
+ ----------------------------------*/
+.sub-sector #name_capa {
+	font-size:17px;
+	
+	float:left;
+	color:#81017E;
+	padding:18px 0 0 2px;
+}
+.sub-sector {
+	clear:both;
+	color:#81017E;
+	padding:5px 0 0 10px;
+}
+.sub-sector ul {
+	float:right;
+	list-style-type:none;
+	margin:0;
+	padding:0;
+}
+.sub-sector li {
+	float:left;
+	padding:8px 20px 0 0;
+}
+.sub-sector li select {
+	width:150px;
+	text-align:center;
+}
+.sub-sector li label {
+	display:block;
+	text-align:left;
+	padding-bottom:5px;
+}
+.sub-sector #btn_subsector {
+	padding-top:10px;
+}
+.sub-sector-tool li {
+	list-style-type:none;
+	float:left;
+	padding:0px 5px 0px 0px;
+}
+/* comando
+ ----------------------------------*/
+.comando {
+	list-style-type:none;
+	margin:0;
+	padding:0;
+	width:90%;
+	float:right;
+}
+.comando li {
+	float:left;
+	padding:0px 10px 0px 0px;
+}
+.comando li label {
+	display:block;
+	padding:0px 0px 5px 0px;
+}
+
+/* dialog actividad
+ ----------------------------------*/
+#dlg_actividad p{
+	color:#ff0000;
+	font-size:1.2em !important;
+	font-weight:lighter;
+}
+
+#dlg_actividad select  {
+	width: 100%;
+	text-align: center;
+}
+
+#dlg_actividad tbody  {	
+	color:#81017E;
+}
+
+#dlg_actividad td {
+	padding: 5px; 
+}
+
+
+#dlg_actividad #btn_actividad{
+	padding: 20px 0 20px 0;
+}
+
+#dlg_actividad input[type='submit'] {	
+	margin:  15px 0 15px 0; 
+}
+
+/* tool
+ ----------------------------------*/
+
+.tool-preview {
+	padding-bottom:10px;
+	display: table;
+	width: 100%;
+}
+
+.tool-preview #rad_preview{
+	float: right;
+}
+
+#id_zoom{
+	width: 80px;
+	height: 28px;
+	
+}
+#id_del_mapa{
+	width: 80px;
+	height: 28px;
+	
+}
+
+
+.tool-capa {
+	text-align:center;
+	padding:1px 0px 20px 0px;
+}
+.btn-img {
+	background:transparent;
+	text-decoration:none;
+	border-width:0px;
+	cursor:pointer;
+}
+.btn-close {
+	background:transparent;
+	text-decoration:none;
+	border-width:0px;
+	cursor:pointer;
+	display:none;
+}
+/* lista de table
+ ----------------------------------*/
+.lista {
+	border-collapse:collapse;
+	font-family:"Lucida Sans Unicode","Lucida Grande",Sans-Serif;
+	font-size:11px;
+	margin:auto;
+}
+.lista  th {
+	color:#81017E;
+	font-size:12px;
+	font-weight:normal;
+	padding:10px 30px;
+}
+.lista td {
+	border-top:1px solid #E8EDFF;
+	color:#666699;
+	padding:10px 10px;
+}
+/* rol
+ ----------------------------------*/
+#rad_rol {
+	padding:30px 0 30px 0;
+	text-align:center;
+}
+.rol th {
+	text-align:left;
+	padding-right:30px;
+}
+.rol td {
+	padding-top:8px;
+}
+.rol #id_rol {
+	text-align:center;
+	width:100%
+}
+.rol #btn {
+	padding-top:13px;
+	text-align:center;
+}
+.rol tbody td  p {
+	font-size:12px;
+	font-weight:normal;
+	color:#81017E;
+}
+/* programa registro de proceso
+ ----------------------------------*/
+#rad_registro {
+	padding:20px 0 20px 0;
+	text-align:center;
+}
+.programa {
+	margin:0px auto 0px auto;
+}
+.programa th {
+	text-align:left;
+	padding-right:20px
+}
+.programa td {
+	padding-top:10px;
+}
+.programa select {
+	text-align:center;
+	width:100%
+}
+.programa label {
+	padding:0;
+	margin:0;
+}
+.programa #id_fecha_inicio {
+	text-align:center;
+}
+.programa #btn {
+	text-align:center;
+}
+.programa ul {
+	list-style-type:none;
+}
+.programa tbody td  p {
+	font-size:12px;
+	font-weight:normal;
+	color:#81017E;
+}
+/* autoridad programa
+ ----------------------------------*/
+#info_programa {
+	display:none;
+}
+#ul_programa {
+	list-style-type:none;
+}
+/* admin programa
+ ----------------------------------*/
+#div_asignar ul {
+	list-style-type:none;
+	margin:0;
+	padding:0;
+	width:150px;
+}
+#div_asignar ul ul {
+	text-align:left;
+}
+#div_asignar li label {
+	display:block;
+	padding:0 0 10px 0;
+}
+#div_asignar li {
+	padding:10px 0 20px 0;
+}
+#div_asignar ul li label {
+	padding:0;
+}
+#div_asignar ul li {
+	padding:5px 0 0 0;
+}
+/* html
+ ----------------------------------*/
+body {
+	background-color:#F5F5F5;
+	margin:0;
+	font-family:"Lucida Sans Unicode";
+	font-size:11px;
+}
+#body-app {
+	width:95%;
+	margin:auto;
+}
+#header {
+	text-align:center;
+}
+#footer {
+	text-align:center;
+}
+#content {
+	width:1000px;
+	background-color:#FFFFFF;
+	margin:0 auto 0 auto;
+	-moz-border-bottom-colors:none;
+	-moz-border-image:none;
+	-moz-border-left-colors:none;
+	-moz-border-right-colors:none;
+	-moz-border-top-colors:none;
+	border-color:-moz-use-text-color #DADADA;
+	border-left:1px solid #DADADA;
+	border-right:1px solid #DADADA;
+	border-style:none solid;
+	border-width:0 1px;
+}
+.login_menu {
+	height:500px;
+}
+.app {
+	height:750px;
+}
+
+/* CSS error django
+ ----------------------------------*/
+.errorlist {
+	list-style-type:none;
+	color:#ff0000;
+	margin:0;
+	padding:0;
+	font-size:1em !important;
+	font-weight:lighter;
+	padding:0 0 0.2em 0.2em
+}
+
+
+
+/*Checar
+ ---------------------------*/
+.btn_transparent {
+	background:transparent;
+	text-decoration:none;
+	border-width:0px;
+	cursor:pointer
+}

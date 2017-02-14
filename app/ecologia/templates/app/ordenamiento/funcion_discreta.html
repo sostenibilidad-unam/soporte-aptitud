@@ -1,0 +1,38 @@
+<script type="text/javascript" src="/site_media/js/ecologia-ordenamiento-fdiscreta.js"></script>
+<center>
+	<div style="display: table; text-align: center; padding-top: 5px; padding-bottom: 10px;">
+		<table>
+			<tr>
+				<td colspan="2"><span id="error_fn_continua" style="color: red;"> </span></td>
+			</tr>
+			<tr>
+				{{fdiscretaForm.as_table}}
+			</tr>
+		</table>
+
+		<div style="height: 30px;"></div>
+		<table id="tabla_discretas" style="display: none;">
+			<thead>
+				<tr>
+					<th style="width: 100px;color: #81017E;">Valor</th>
+					<th style="width: 100px;color: #81017E;">Nombre</th>
+					<th style="width: 100px;color: #81017E;">Nuevo valor</th>
+					<th style="width: 100px;color: #81017E;display:none;"></th>
+				</tr>
+			</thead>
+			<tbody></tbody>
+			<tfoot>
+				<tr>
+					<td colspan="4" align="center"><div style="height: 30px;"></div></td>
+				</tr>
+				<tr>
+					<td colspan="4" align="center">
+					<input type="submit" onclick="javascript:generaFuncionValor('{{csrf_token}}');" value="Generar mapa de función discreta"/>
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+	
+
+</center>

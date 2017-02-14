@@ -1,0 +1,95 @@
+{%extends "app/base.html"%}
+{%load tag%}
+{%block head%}
+<!--
+JS ECOLOGIA
+-->
+<script src="/site_media/js/jquery.blockUI.js"></script>
+<script src="/site_media/js/ecologia-preparacion_proceso.js"></script>
+
+<script src="/site_media/js/ecologia-programa.js"></script>
+<script src="/site_media/js/ecologia-exp-imp-capa.js"></script>
+
+<script>
+	$(document).ready(function() {
+		tab_id = "{{tab_id}}";
+		$("#tbs_programa").tabs({
+			show : function(event, ui) {
+			},
+			selected : tab_id,
+		}).height(475);
+
+		var sectionImp = '{{section_imp}}';
+		if(sectionImp == 'True') {
+			$("#rad_ver").trigger("click");
+		}
+
+	}); 
+</script>
+{%endblock%}
+
+{%block home%}/ecologia/preparacion/{%endblock%}
+{%block home_title%}Menu{%endblock%}
+
+{%block title%}Exportar/Importar capa{%endblock%}
+
+{%block body_app%}
+<div id="rad_registro">
+	<input type="radio" id="rad_crear" name="radio" checked="checked"/>
+	<label for="rad_crear">Exportar</label>
+	<input type="radio" id="rad_ver" name="radio"   />
+	<label for="rad_ver">Importar</label>
+
+</div>
+<div style="display:table;width: 100%; hepadding-top: 5px; padding-bottom: 50px;height: 100%; min-height: 500px;">
+	<center>
+		<div id="div_crear">
+			<form method="post">
+				{% csrf_token %}
+				<table>
+					<tr>
+						<td colspan="2" align="center"><span id="error_export" style="color: red;"></span></td>
+					</tr>
+
+					{{exportarCapaForm.as_table}}
+					<input type="hidden" name="type" value="export" />
+					<tr>
+						<td colspan="2" align="center">
+							<br/>
+							<input type="submit" value="Exportar" onclick="return submitExportarCapa();" />
+							</td>
+					</tr>
+					
+				</table>
+			</form>
+
+		</div>
+
+		<div id="div_ver" style="display:none; padding-bottom: 10px;width: 800px;" >
+			<form method="post" enctype="multipart/form-data" accept-charset="">
+				{% csrf_token %}
+				<table>
+					<tr>
+						<td colspan="2" align="center"><span id="error_import" style="color: red;"></span></td>
+					</tr>
+					<tr>
+						<td colspan="2" align="center"><span id="ok_import" style="color: #81017E;">
+							{{capa_importada_ok}}
+						</span></td>
+					</tr>
+					
+					{{importarCapaForm.as_table}}
+					<tr>						
+						<td colspan="2" align="center">
+							<br/>
+						<input type="submit" onclick="return submitImportarCapa();" value="Importar" />
+						</td>
+					</tr>
+				</table>
+
+				<input type="hidden" name="type" value="import" />
+			</form>
+		</div>
+	</center>
+</div>
+{%endblock%} 

@@ -1,0 +1,41 @@
+{%extends "app/base.html"%}
+
+{%block head%}
+{%endblock%}
+
+{%block home%}/ecologia/menu/{%endblock%}
+{%block home_title%}Menu{%endblock%}
+
+{%block title%}Exportar/Importar{%endblock%}
+
+{%block body_app%}
+<div style = "display: table; margin-left: auto; margin-right: auto; padding-top: 80px;height: 400px">
+	<div style="text-align: center">
+		<label>Importar</label>
+	</div>
+	<div style="text-align: center; padding-top: 20px">
+		<label>Archivo: </label>
+		<input type="file" name="somename" size="chars">
+	</div>
+	<div style="text-align: center; padding-top: 50px">
+		<label>Exportar</label>
+	</div>
+	
+	<div style="text-align: center; padding-top: 20px;">
+		<select id="lst" multiple="multiple" style="width: 50%; height: 100px">
+			<option>prueba</option>
+			<option>demo2</option>
+			<option>demo</option>
+		</select>
+	</div>
+	
+	<div style="text-align: center; padding-top: 20px;">
+		
+		<button>
+			Exportar
+		</button>
+	</div>
+	
+	
+</div>
+{%endblock%}

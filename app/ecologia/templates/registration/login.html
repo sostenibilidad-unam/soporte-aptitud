@@ -1,0 +1,49 @@
+{%extends "base.html"%}
+
+{%block head%}
+<script language="JavaScript">
+	$(document).ready(function() {
+		$('#id_username').focus();
+	});
+
+</script>
+{%endblock%}
+
+{%block body%}
+<div align="center" class="login_menu">
+	
+	<div align="center" style="padding-top: 40px;padding-bottom: 20px">
+		<h1 style="font-size: 30px;">Ordenamiento Ecológico</h1>
+	</div>
+	
+	<div class="login" >
+		<form action='.' method='post'>
+			{% csrf_token %}
+			<ul>
+				<li>
+					{% if form.errors %}
+					<p>
+						Usuario incorrecto
+					</p>
+					{%else%}
+					<p>
+						Iniciar sesi&oacute;n
+					</p>
+					{% endif %}
+				</li>
+				<li>
+					<label for="username">Usuario</label>
+					<input type="text" name="username" value="" id="id_username" size="30" >
+				</li>
+				<li>
+					<label for="password">Contrase&ntilde;a</label>
+					<input type="password" name="password" value="" id="id_password" size="30" >
+				</li>
+				<li id="btn">
+					<input  type="submit" value="Entrar" />
+				</li>
+			</ul>
+		</form>
+	</div>
+</div>
+{%endblock%} 

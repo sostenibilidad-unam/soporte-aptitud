@@ -1,0 +1,137 @@
+{%extends "app/base.html"%}
+{%load tag%}
+
+{%block head%} <!--TABLE-->
+<script src="/site_media/js/jquery.blockUI.js"></script>
+<script src="/site_media/js/ecologia-rol.js"></script>
+
+{%endblock%}
+
+{%block home%}
+
+{% ifequal rol ROL.ADMIN %}
+/ecologia/preparacion/
+{% endifequal %}
+{% ifnotequal rol ROL.ADMIN %}
+/ecologia/menu/
+{% endifnotequal %}
+
+{%endblock%}
+
+{%block home_title%}Menu{%endblock%}
+
+{%block title%}
+
+{% ifequal rol ROL.ADMIN %}
+Registro operadores
+{% endifequal %}
+
+{% ifnotequal rol ROL.ADMIN %}
+Usuarios
+{% endifnotequal %}
+
+{%endblock%}
+
+{%block body_app%}
+<div id="rad_rol">
+	<input type="radio" id="rad_crear" name="radio"  checked="checked" />
+	<label for="rad_crear">Crear</label>
+
+	<input type="radio" id="rad_ver" name="radio"/>
+	<label for="rad_ver">Mostrar todos</label>
+</div>
+
+<div align="center" id="div_crear" style="padding-bottom: 50px">
+	<form action="" method="post">
+		{% csrf_token %}
+		<table class="rol">
+			{{ frol.as_table }}
+			<td id='btn' colspan="2">
+			<p>
+				{{user_name}}
+			</p>
+			<input type="submit" value="Crear usuario" />
+			</td>
+		</table>
+	</form>
+</div>
+
+<div id="div_ver" style="display:none; padding-bottom: 10px">
+	<table id="tbl_rol" class="lista">
+		<thead>
+			<tr>
+				<th>Nombre de usuario</th>
+				<th>Nombre</th>
+				<th>Apellido</th>
+				<th>Email</th>
+				<th>Rol</th>
+				<th>Editar</th>
+			</tr>
+		</thead>
+		<tbody>
+			{%for u in usr%}
+
+			<tr>
+				<td>{{u.username}}</td><td id="firstname_{{u.id}}">{{u.first_name}}</td><td id="lastname_{{u.id}}">{{u.last_name}}</td><td id="email_{{u.id}}">{{u.email}}</td><td>{{u.id|getRol}}</td>
+				<td><a href="javascript:;" onclick="javascript:displayEditUser({{u.id}},'{{u.username}}','{{u.first_name}}','{{u.last_name}}','{{u.email}}')">Editar</a></td>
+			</tr>
+			{%endfor%}
+		</tbody>
+	</table>
+	<div id="_userForm" style="display: none;position: absolute;left:30%;top:20%;background-color: white;border: 5px;border-style: solid;margin: 15 15 15 15;">
+		<table class="rol">
+			<tr>
+				<td colspan="2" align="center"><h2>Actualizar datos</h2></td>
+			</tr>
+			<tr>
+				<th><label for="_id_username">*Nombre de usuario:</label></th><td>
+				<input id="_id_username" disabled="true" type="text" name="_username" maxlength="30" />
+				</td>
+			</tr>
+			<tr>
+				<th><label for="_id_first_name">*Nombre:</label></th><td>
+				<input id="_id_first_name" type="text" name="_first_name" maxlength="30" />
+				</td>
+			</tr>
+			<tr>
+				<th><label for="_id_last_name">*Apellido:</label></th><td>
+				<input id="_id_last_name" type="text" name="_last_name" maxlength="30" />
+				</td>
+			</tr>
+			<tr>
+				<th><label for="_id_password1">Contrase&ntilde;a:</label></th><td>
+				<input type="password" name="_password1" id="_id_password1" />
+				</td>
+			</tr>
+			<tr>
+				<th><label for="_id_password2">Confirmar contrase&ntilde;a:</label></th><td>
+				<input type="password" name="_password2" id="_id_password2" />
+				</td>
+			</tr>
+			<tr>
+				<th><label for="_id_email">*Email:</label></th><td>
+				<input type="text" name="_email" id="_id_email" />
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2"><span id="erros_updateuser" style="color: red;"></span></td>
+			</tr>
+			<tr>
+				<td id='btnOk' align="right">
+				<input type="submit" value="Actualizar" onclick="javascript:updateUser('{{csrf_token}}');return false;" />
+				</td>
+				<td id='btnCancel' align="left">
+				<input type="submit" value="Cancelar" onclick="javascript:cleanAndCloseUserForm();return false;"/>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+				<input type="hidden" id="_userId" value="" />
+				</td>
+			</tr>
+
+		</table>
+
+	</div>
+</div>
+{%endblock%}

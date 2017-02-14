@@ -1,0 +1,106 @@
+{%extends "app/base.html"%}
+
+{%block head%}
+{%endblock%}
+
+{%block home%}/ecologia/menu/{%endblock%}
+{%block home_title%}Menu{%endblock%}
+
+{%block title%}Registro histórico{%endblock%}
+
+{%block body_app%} 
+<script src="/site_media/js/ecologia-programa.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+	
+	var oRows = document.getElementById('grid').getElementsByTagName('tr');
+	var iRowCount = oRows.length;
+	
+	if(iRowCount<2){
+		$("#grid").hide();
+		$("#no_registers").show();
+	}else{
+		$("#grid").show();
+		$("#no_registers").hide();
+	}
+		
+	$('#id_fecha_desde').width('60px');
+	$('#id_fecha_hasta').width('60px');
+
+	$('#id_fecha_desde').datepicker();	
+	$('#id_fecha_hasta').datepicker();
+	
+
+});
+
+	
+	
+</script>
+<div style = "display: table; margin-left: auto; margin-right: auto; width: 700px; padding-top: 80px">
+	
+	<div style="clear: both;  padding-top: 0px; padding-bottom: 20px; text-align: center">
+		<h2>Criterios de b&uacute;squeda</h2><br/>
+		<form id="search_form" action="/ecologia/registro_historico/" method="post">
+			{% csrf_token %}
+			<table>
+				<tr>
+					<td>
+						Usuario:
+						{{ search_form.user }}			
+					</td>
+					<td>
+						&nbsp;Acci&oacute;n:
+						{{ search_form.accion }}
+					</td>
+					<td>
+						&nbsp;Desde:
+						{{ search_form.fecha_desde }}
+					</td>
+					<td>
+						&nbsp;Hasta:
+						{{ search_form.fecha_hasta }}
+					</td>
+					<td>&nbsp;&nbsp;<input type="submit" value="Buscar" /></td>
+				</tr>
+			</table>
+			
+			
+		</form>
+		
+	</div>
+	<div style="clear: both; width: 100%">
+		<table id="no_registers" align="center" style="clear: both; width: 100%">
+			<tr>
+				<td align="center">
+					<br/><br/><br/>
+					No hay registros
+					<br/><br/><br/><br/><br/>
+					
+				</td>
+			</tr>
+		</table>
+		<table id="grid" class="lista">
+			<thead>
+				<tr>
+					<th width="30%" align="center">Fecha</th>
+					<th width="25%" align="center">Accion</th>
+					<th width="15%" align="center">Usuario</th>
+					<th width="30%" align="center">Detalle</th>
+				</tr>
+			</thead>
+			<tbody>
+				{%for m in movements%}
+				<tr>
+					<td align="center">{{m.fecha}}</td>
+					<td align="center">{{m.accion.descripcion}}</td>
+					<td align="center">{{m.user.username}}</td>
+					<td align="center">{{m.detalles}}</td>
+				</tr>
+				{%endfor%}
+			</tbody>
+		</table>
+		
+		
+	</div>
+</div>
+{%endblock%}

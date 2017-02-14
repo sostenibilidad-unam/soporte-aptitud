@@ -1,0 +1,110 @@
+#floatingBarsG{
+position:absolute;
+display:none;
+top: 0;
+bottom: 0;
+left: 0;
+right: 0;
+margin: auto;
+ width:200px;
+height:248px}
+
+.blockG{
+position:absolute;
+background-color:#FFFFFF;
+width:32px;
+height:77px;
+-moz-border-radius:26px 26px 0 0;
+-webkit-border-radius:26px 26px 0 0;
+-webkit-transform:scale(0.4);
+-webkit-animation-name:fadeG;
+-webkit-animation-duration:1.2s;
+-webkit-animation-iteration-count:infinite;
+-webkit-animation-direction:linear;
+-moz-transform:scale(0.4);
+-moz-animation-name:fadeG;
+-moz-animation-duration:1.2s;
+-moz-animation-iteration-count:infinite;
+-moz-animation-direction:linear}
+
+#rotateG_01{
+-webkit-transform:rotate(-90deg);
+-moz-transform:rotate(-90deg);
+left:0;
+top:90px;
+-webkit-animation-delay:0.45s;
+-moz-animation-delay:0.45s}
+
+#rotateG_02{
+-webkit-transform:rotate(-45deg);
+-moz-transform:rotate(-45deg);
+left:26px;
+top:32px;
+-webkit-animation-delay:0.6s;
+-moz-animation-delay:0.6s}
+
+#rotateG_03{
+-webkit-transform:rotate(0deg);
+-moz-transform:rotate(0deg);
+left:84px;
+top:10px;
+-webkit-animation-delay:0.75s;
+-moz-animation-delay:0.75s}
+
+#rotateG_04{
+-webkit-transform:rotate(45deg);
+-moz-transform:rotate(45deg);
+right:26px;
+top:32px;
+-webkit-animation-delay:0.9s;
+-moz-animation-delay:0.9s}
+
+#rotateG_05{
+-webkit-transform:rotate(90deg);
+-moz-transform:rotate(90deg);
+right:0;
+top:90px;
+-webkit-animation-delay:1.05s;
+-moz-animation-delay:1.05s}
+
+#rotateG_06{
+-webkit-transform:rotate(135deg);
+-moz-transform:rotate(135deg);
+right:26px;
+bottom:23px;
+-webkit-animation-delay:1.2s;
+-moz-animation-delay:1.2s}
+
+#rotateG_07{
+-webkit-transform:rotate(180deg);
+-moz-transform:rotate(180deg);
+bottom:0;
+left:84px;
+-webkit-animation-delay:1.35s;
+-moz-animation-delay:1.35s}
+
+#rotateG_08{
+-webkit-transform:rotate(-135deg);
+-moz-transform:rotate(-135deg);
+left:26px;
+bottom:23px;
+-webkit-animation-delay:1.5s;
+-moz-animation-delay:1.5s}
+
+@-webkit-keyframes fadeG{
+0%{
+background-color:#81017E}
+
+100%{
+background-color:#FFFFFF}
+
+}
+
+@-moz-keyframes fadeG{
+0%{
+background-color:#81017E}
+
+100%{
+background-color:#FFFFFF}
+
+}

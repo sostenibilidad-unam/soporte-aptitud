@@ -1,0 +1,60 @@
+{%extends "app/base.html"%}
+{%load tag%}
+{%block head%}
+<script src="/site_media/js/ecologia-seguimiento-operador.js"></script>
+{%endblock%}
+
+{%block home%}/ecologia/menu/{%endblock%}
+{%block home_title%}Menu{%endblock%}
+
+{%block title%}Seguimiento a operadores{%endblock%}
+
+{%block body_app%}
+
+<div style = "display: table; margin-left: auto; margin-right: auto; width: 700px; padding-top: 80px">
+
+	<div style="clear: both;  padding-top: 0px; padding-bottom: 20px; text-align: center;">
+		<h2>Seleccione operador a revisar</h2>
+
+		<table id="tbl_rol" class="lista">
+			<thead>
+				<tr>
+					<th>Operador</th>
+					<th>Sector</th>
+					<th>Revisar</th>
+					<th>Acci&oacute;n</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for user_sectores in usrs.values %}
+				<tr>
+					<td> {{user_sectores.0.first_name}} {{user_sectores.0.last_name}} </td>
+
+					<td> {% for sector in user_sectores.1 %}
+					- {{sector.nombre}}
+					<br/>
+					{%endfor%} </td>
+					<td><a href="/ecologia/ordenamiento?admin_operid={{user_sectores.0.id}}">Revisar</a></td>
+					<td>
+						{% ifequal user_sectores.2 1%}
+							<!-- Está activo-->
+							<a id="desactive_oper_{{user_sectores.0.id}}" href="javascript:;" onclick="javascript:activaOperador({{user_sectores.0.id}},'NO_AC','{{csrf_token}}');">Deshabilitar</a>
+							<a style="display: none;" id="active_oper_{{user_sectores.0.id}}" href="javascript:;" onclick="javascript:activaOperador({{user_sectores.0.id}},'AC','{{csrf_token}}');">Habilitar</a>						 
+						{% endifequal %}
+						
+						{% ifequal user_sectores.2 0%}
+							<!-- No está activo-->						
+							<a id="active_oper_{{user_sectores.0.id}}" href="javascript:;" onclick="javascript:activaOperador({{user_sectores.0.id}},'AC','{{csrf_token}}');">Habilitar</a>
+							<a style="display: none;" id="desactive_oper_{{user_sectores.0.id}}" href="javascript:;" onclick="javascript:activaOperador({{user_sectores.0.id}},'NO_AC','{{csrf_token}}');">Deshabilitar</a> 
+						{% endifequal %}
+						
+					</td>
+				</tr>
+				{%endfor%}
+			</tbody>
+		</table>
+
+	</div>
+
+</div>
+{%endblock%}

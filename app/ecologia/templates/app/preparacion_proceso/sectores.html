@@ -1,0 +1,62 @@
+{%extends "app/base.html"%}
+{%load tag%}
+{%block head%}
+<!--
+JS ECOLOGIA
+-->
+<script src="/site_media/js/jquery.blockUI.js"></script>
+<script src="/site_media/js/ecologia-preparacion_proceso.js"></script>
+
+{%endblock%}
+
+{%block home%}/ecologia/preparacion/{%endblock%}
+{%block home_title%}Menu{%endblock%}
+
+{%block title%}Sectores{%endblock%}
+
+{%block body_app%}
+
+<div style="display:table;width: 100%; padding-top: 5px; padding-bottom: 50px">
+
+	<center>
+		
+		<p style="color: #81017E;">
+			{{savedSector}}
+		</p>
+		<span class="errorlist" id="error_deleting" style="display:none;"></span>
+		<form action="" method="POST" id="sectorForm" autocomplete="off">
+			{% csrf_token %}
+			<table class="rol">
+				{{sectorForm.as_table}}<td id='btn' colspan="2">
+				<p>
+					{{user_name}}
+				</p>
+				<input type="submit" onclick="javascript:return clearSectorInputs();" value="Crear sector" />
+				</td>
+			</table>
+		</form>
+	</center>
+	
+	<table id="tbl_rol" class="lista">
+		<thead>
+			<tr>
+				<th>Sector</th>
+				<th>Prefijo mapas</th>
+			</tr>
+		</thead>
+		<tbody>
+			{%for sector in sectores%}
+			<tr id='{{sector.id}}' >
+				<td>{{sector.nombre}}</td>
+				<td align="center">{{sector.prefijo_mapas}}</td>
+				<td align="center"><a href="javascript:;" onclick="javascript:deleteSector('{{sector.id}}');">Eliminar*</a></td>
+			</tr>
+			{%endfor%}
+			
+		</tbody>
+		
+	</table>
+	<br/>
+	<center><span>* Solo se podr&aacuten borrar los sectores que no hayan sido asignados</span></center>
+</div>
+{%endblock%} 

@@ -1,0 +1,187 @@
+{%extends "app/base.html"%}
+{%load tag%}
+{%block head%}
+<!--
+JS ECOLOGIA
+-->
+<script src="/site_media/js/jquery.blockUI.js"></script>
+<script src="/site_media/js/ecologia-programa.js"></script>
+<script src="/site_media/js/ecologia-administracion.js"></script>
+<script>
+	$(document).ready(function() {
+		tab_id = "{{tab_id}}";
+		$("#tbs_programa").tabs({
+			show : function(event, ui) {
+			},
+			selected : tab_id,
+		}).height(475);
+	}); 
+</script>
+{%endblock%}
+
+{%block home%}/ecologia/menu/{%endblock%}
+{%block home_title%}Menu{%endblock%}
+
+{%block title%}Administraci&oacute;n{%endblock%}
+
+{%block body_app%}
+
+{% ifequal rol ROL.ROOT2 %}
+<div id="rad_registro">
+	<input type="radio" id="rad_crear" name="radio" checked="checked"/>
+	<label for="rad_crear">Procesos</label>
+	<input type="radio" id="rad_ver" name="radio"   />
+	<label for="rad_ver">Usuarios de sistema</label>
+
+</div>
+{% endifequal %}
+
+<div style="display:table;width: 100%; padding-top: 5px; padding-bottom: 50px">
+	{% ifequal rol ROL.ROOT2 %}
+	<div id="div_crear">
+		<table id="tbl_rol" class="lista">
+			<thead>
+				<tr>
+					<th colspan="7" align="right">
+						<form action="/ecologia/exportexcel_programs/" method="POST" target="_blank">
+							{%csrf_token%} 
+							<input type="submit" value="Exportar a excel"  />
+						</form>						
+					</th>
+				</tr>
+				<tr>
+					<th>Nombre del proceso OE</th>
+					<th>Modalidad: regional/local/marino</th>
+					<th>Fecha de inicio</th>
+					<th>Autoridad responsable del proceso</th>
+					<th>Responsable del estudio t&eacute;cnico</th>
+					<th>Responsable en DGPAIRS</th>
+					<th>Supervisor</th>
+				</tr>
+			</thead>
+			<tbody>
+				{%for p in prg%}
+				<tr>
+					<td><a href="javascript:;" onclick="javascript:viewProgram({{p.id}})">{{p.nombre}}</a></td>
+					<td>{{p.modalidad}}</td><td>{{p.fecha_inicio}}</td><td>{{p.responsable_autoridad|getFullUsrName}}</td><td>{{p.responsable_instituto|getFullUsrName}}</td><td>{{p.responsable_dgpairs|getFullUsrName}}</td><td>{{p.responsable_ine|getFullUsrName}}</td>
+				</tr>
+				{%endfor%}
+			</tbody>
+		</table>
+	</div>
+	<div id="viewProgram" style="display: none;">
+			<form action="" method="POST" id="adminViewProgramForm">
+				{% csrf_token %}
+				{{adminViewProgramForm}}
+			</form>
+			
+		</div>
+	<div id="div_ver" style="display:none; padding-bottom: 10px;width: 800px;" >
+
+		<table id="tbl_rol" class="lista" style="width: 800px;margin: 0 0 0 0;">
+			<thead>
+				<tr>
+					<th>Nombre de usuario</th>
+					<th>Nombre</th>
+					<th>Apellido</th>
+					<th>Email</th>
+					<th>Rol</th>
+					<th>Proceso</th>
+					<!--th>Acci&oacute;n</th-->
+					<th>Editar</th>
+				</tr>
+			</thead>
+			<tbody>
+				{%for u in usersPrograms%}
+				<tr>
+					<td id="username_{{u.user.id}}">{{u.user.username}}</td>
+					<td id="firstname_{{u.user.id}}">{{u.user.first_name}}</td>
+					<td id="lastname_{{u.user.id}}">{{u.user.last_name}}</td>
+					<td id="email_{{u.user.id}}">{{u.user.email}}</td>
+					<td id="rol_{{u.user.id}}">{{u.user.id|getRol}}</td>
+					<td id="programs_{{u.user.id}}"> {% if u.programs|length > 0 %}
+					{{programs}}
+					<select id="programs_{{u.user.id}}" style="width: 120px;">
+						{% for program in u.programs %}
+						<option value="{{u.user.id}}_{{program.id}}">{{program.nombre}}</option>
+						{%endfor%}
+					</select> {% else %} <b>No tiene</b> {% endif %} </td>
+					<!--
+					<td id="activedesactive_{{u.user.id}}"><a href="javascript:;">Activar/Desactivar</a></td>
+					-->
+					<td id="edit_{{u.user.id}}"><a id="edit_link_{{u.user.id}}" href="javascript:;" onclick="javascript:editUser({{u.user.id}})">Editar</a><a id="cancel_link_{{u.user.id}}" style="display: none;" href="javascript:;" onclick="javascript:cancelUser({{u.user.id}})">Cancelar</a></td>
+
+				</tr>
+				{%endfor%}
+			</tbody>
+		</table>
+		
+		<div id="userForm" style="display: none;position: absolute;left:30%;top:20%;background-color: white;border: 5px;border-style: solid;margin: 15 15 15 15;">
+
+			<table class="rol">
+				<tr>
+					<td colspan="2" align="center"><h2>Actualizar datos</h2></td>
+				</tr>
+				<tr>
+					<th><label for="id_username">*Nombre de usuario:</label></th><td>
+					<input id="id_username" disabled="true" type="text" name="username" maxlength="30" />
+					</td>
+				</tr>
+				<tr>
+					<th><label for="id_first_name">*Nombre:</label></th><td>
+					<input id="id_first_name" type="text" name="first_name" maxlength="30" />
+					</td>
+				</tr>
+				<tr>
+					<th><label for="id_last_name">*Apellido:</label></th><td>
+					<input id="id_last_name" type="text" name="last_name" maxlength="30" />
+					</td>
+				</tr>
+				<tr>
+					<th><label for="id_password1">Contrase&ntilde;a:</label></th><td>
+					<input type="password" name="password1" id="id_password1" />
+					</td>
+				</tr>
+				<tr>
+					<th><label for="id_password2">Confirmar contrase&ntilde;a:</label></th><td>
+					<input type="password" name="password2" id="id_password2" />
+					</td>
+				</tr>
+				<tr>
+					<th><label for="id_email">*Email:</label></th><td>
+					<input type="text" name="email" id="id_email" />
+					</td>
+				</tr>
+				<tr>
+					<th><label for="id_charge">*Cargo:</label></th><td>
+					<input id="id_charge" type="text" name="charge" maxlength="30" />
+					</td>
+				</tr>
+				<tr>
+					<th><label for="id_company">*Institución/Empresa:</label></th><td>
+					<input id="id_company" type="text" name="company" maxlength="30" />
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2"><span id="erros_updateuser" style="color: red;"></span></td>
+				</tr>
+				<tr>
+					<td id='btnOk' align="right">
+						<input type="submit" value="Actualizar" onclick="javascript:updateUser('{{csrf_token}}');return false;" />
+					</td>	
+					<td id='btnCancel' align="left">
+						<input type="submit" value="Cancelar" onclick="javascript:cleanAndCloseUserForm();return false;"/>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2"><input type="hidden" id="userId" value="" /></td>
+				</tr>
+				
+			</table>
+		</div>
+
+	</div>
+	{% endifequal %}
+
+</div>
+{%endblock%} 

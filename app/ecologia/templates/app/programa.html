@@ -1,0 +1,81 @@
+{%extends "app/base.html"%}
+{%load tag%}
+{%block head%}
+<!--
+JS ECOLOGIA
+-->
+<script src="/site_media/js/ecologia-programa.js"></script>
+<script>
+	$(document).ready(function() {
+		tab_id = "{{tab_id}}";
+		
+		if(tab_id!=null && tab_id!=undefined){			
+			$("#"+tab_id).attr("checked","true");
+			$("#rad_registro").trigger("change");
+		}
+		/*$("#tbs_programa").tabs({
+			show : function(event, ui) {
+			},
+			selected : tab_id,
+		}).height(475);*/
+	}); 
+</script>
+{%endblock%}
+
+{%block home%}/ecologia/menu/{%endblock%}
+{%block home_title%}Menu{%endblock%}
+
+{%block title%}Registro de procesos{%endblock%}
+
+{%block body_app%}
+
+{% ifequal rol ROL.ROOT2 %}
+<div id="rad_registro">
+	<input type="radio" id="rad_crear" name="radio"  checked="checked" />
+	<label for="rad_crear">Alta usuarios</label>
+	<input type="radio" id="rad_ver" name="radio"/>
+	<label for="rad_ver">Alta procesos</label>
+</div>
+{% endifequal %}
+
+<div style="display:table;width: 100%; padding-top: 5px; padding-bottom: 50px">
+
+	<div id="div_crear">
+
+		<div id="div_rol">
+					<center>
+						<form action="" method="post">
+							{% csrf_token %}
+							<table class="rol">
+								{{ frol.as_table }} <td id='btn' colspan="2">
+								<p>
+									{{user_name}}
+								</p>
+								<input type="submit" value="Crear usuario" />
+								</td>
+							</table>
+						</form>
+					</center>
+				</div>
+	</div>
+
+	{% ifequal rol ROL.ROOT2 %}
+	<div id="div_ver" style="display:none; padding-bottom: 10px">
+		{% ifequal rol ROL.ROOT2 %}
+		<form action="" method="post">
+			{% csrf_token %}
+			<table id="add_programa" class="programa">
+				{{fprograma.as_table}} <td id="btn" colspan="2" >
+				<p>
+					{{program_saved}}
+				</p>
+				<input  type="submit" value="Agregar proceso " />
+				</td>
+			</table>
+		</form>
+		{% endifequal %}
+	</div>
+	{% endifequal %}
+
+</div>
+{%endblock%} 

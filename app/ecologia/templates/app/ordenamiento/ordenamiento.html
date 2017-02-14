@@ -1,0 +1,302 @@
+{%extends "app/ordenamiento/base.html"%}
+
+{%block head%} <!--
+JS ZOOM
+-->
+<link rel="stylesheet" href="/site_media/lib/cloud-zoom/cloud-zoom.css" type="text/css" />
+<script type="text/JavaScript" src="/site_media/lib/cloud-zoom/cloud-zoom.1.0.2.js"></script>
+<!--
+JS ECOLOGIA
+-->
+<script src="/site_media/js/ecologia-ordenamiento-util.js"></script>
+<script src="/site_media/js/ecologia-ordenamiento.js"></script>
+<script src="/site_media/js/ecologia-ordenamiento-grafica.js"></script>
+<!--
+JSPLOT
+-->
+<script src="/site_media/lib/jqplot/jquery.jqplot.1.0.0b2_r792/dist/jquery.jqplot.min.js"></script>
+<script src="/site_media/lib/jqplot/jquery.jqplot.1.0.0b2_r792/dist/excanvas.min.js"></script>
+<script src="/site_media/lib/jqplot/jquery.jqplot.1.0.0b2_r792/dist/plugins/jqplot.highlighter.min.js"></script>
+<script src="/site_media/lib/jqplot/jquery.jqplot.1.0.0b2_r792/dist/plugins/jqplot.cursor.min.js"></script>
+<script src="/site_media/lib/jqplot/jquery.jqplot.1.0.0b2_r792/dist/plugins/jqplot.dateAxisRenderer.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/site_media/lib/jqplot/jquery.jqplot.1.0.0b2_r792/dist/jquery.jqplot.css" />
+<!--
+TERMINAL
+-->
+<script src="/site_media/lib/terminal/jquery.terminal-0.4.6.js"></script>
+<script src="/site_media/lib/terminal/jquery.mousewheel-min.js"></script>
+<link href="/site_media/lib/terminal/jquery.terminal.css" rel="stylesheet" type="text/css"/>
+{%endblock%}
+
+{%block home%}
+	{% ifequal rol ROL.ROOT2 %}
+	../administracion/
+	{% endifequal %}
+	{% ifequal rol ROL.ADMIN %}
+	../seguimiento_operadores/
+	{% endifequal %}
+{%endblock%}
+{%block title%}Generador de funci&oacute;n de valor y an&aacute;lisis de aptitud {%endblock%}
+{%block body_app%}
+{% ifequal rol ROL.OPERADOR %}
+	<input type="hidden" value="Qwr05" id="_rol_"/>
+{% endifequal %}
+{% ifequal rol ROL.SUPERVISOR %}
+	<input type="hidden" value="QFr04" id="_rol_"/>
+{% endifequal %}
+<div class="sub-sector">
+	<span id="name_capa"></span>
+	<ul>
+		{{fsector.as_ul}}
+		{{factividad.as_ul}}
+		<li>
+			<label for="id_peso">Peso: </label>
+			<span id='id_peso'>{{peso}}</span>
+		</li>
+		<li>
+			
+			{% ifequal rol ROL.OPERADOR %}
+						
+			<div id="btn_subsector">
+				
+				<button>
+					Agregar Actividad
+				</button>
+				<!--
+				<button>
+					Editar  Actvidad
+				</button>
+				<button>
+					Eliminar Actividad
+				</button>
+				-->
+			</div>
+			{% endifequal %}
+		</li>
+	</ul>
+	<input type="hidden" id="ord_csrf_token" value="{{ csrf_token }}"/>
+</div>
+<div  style="display: table;width:100%;  padding-top:10px">
+	<div style="display: table; width: 100%;">		
+		<div style="float:left ;width: 20%">
+			<div id="accordion">
+				<h3><a href="#"> BD Cartogr&aacute;fica <span id='sector'></span></a></h3>
+				<div>
+					{{mapa_sector}}
+				</div>
+				<h3><a href="#"> BD Cartogr&aacute;fica general</a></h3>
+				<div style="height:  400px; overflow:hidden; " >
+					{{fbd_cartografica}}
+				</div>
+				<h3><a href="#"> Mapas: funci&oacuten valor </a></h3>
+				<div>
+					{{mapa_valor}}
+				</div>
+				<h3><a href="#"> Mapas: aptitud </a></h3>
+				<div>
+					{{mapa_aptitud}}
+				</div>
+			</div>
+		</div>
+		<div  style="float:right; width: 78% ;">
+			<div id="tbs_capa">
+				<ul>
+					<li id="li_preview">
+						<a href="#div_preview">Vista previa</a>
+					</li>
+					{% ifequal rol ROL.OPERADOR %}
+					<li id="li_continua">
+						<a href="#continua">Funci&oacuten continua</a>
+					</li>
+					<li id="li_discreta">
+						<a href="#discreta">Funci&oacuten discreta</a>
+					</li>
+					<li id="li_preparacion" style="">
+						<a href="#preparacion">Preparaci&oacute;n de capas</a>
+					</li>					
+					<li id="li_aptitud" style="display: none">
+						<a href="#aptitud">An&aacute;lisis de aptitud</a>
+					</li>
+					{% endifequal %}
+				</ul>
+				<div id="div_preview">
+					<div class="tool-preview" >
+						<button id="btn_del_capa">
+							Eliminar capa
+						</button>
+						{% ifequal rol ROL.OPERADOR %}
+						<button id="btn_aceptar_aptitud">
+							Aprobar mapa aptitud
+						</button>
+						<button id="btn_desaprobar_aptitud">
+							Desaprobar mapa aptitud
+						</button>
+						{% endifequal %}
+						{% ifequal rol ROL.ADMIN%}
+						<span  id="txt_aprobado" style="display: none"> Aprobado </span>
+						<span  id="txt_no_aprobado" style="display: none"> No aprobado </span>
+						{% endifequal %}
+						{% ifequal rol ROL.SUPERVISOR %}
+						<span  id="txt_aprobado" style="display: none"> Aprobado </span>
+						<span  id="txt_no_aprobado" style="display: none"> No aprobado </span>
+						{% endifequal %}
+						{% ifequal rol ROL.ROOT2 %}
+						<span  id="txt_aprobado" style="display: none"> Aprobado </span>
+						<span  id="txt_no_aprobado" style="display: none"> No aprobado </span>
+						{% endifequal %}
+						<div id="rad_preview">
+							<input style="display: none;" type="radio" id="rad_vista" name="rad_grp_preview" checked="checked" />
+							<label style="display: none;" for="rad_vista">Capa</label>
+							<!--
+								Do not delete
+							<input type="radio" id="rad_info" name="rad_grp_preview" />
+							<label for="rad_info">Informaci&oacute;n</label>
+						-->
+						</div>
+						<br/>
+						<span id="name_mapa_fnValor" style="color: #81017E;font-weight: bold;text-align: center;"></span>
+						<br/>
+						<span id="minmax_mapa" style="color: #81017E;font-weight: bold;text-align: center;"></span>
+					</div>
+					<div id="div_img_capa">
+						<div style="text-align: center">										
+							<a rel="position:'inside'" class="cloud-zoom" href=""> <img id="img_capa"> </a>
+							<img id="img_capa2">
+							<div id="image_title"></div>							
+						</div>
+						
+						<div>
+							<button  id="id_zoom">
+								Zoom
+							</button>
+							{% ifequal rol ROL.OPERADOR %}
+							<input type="submit"   id="id_del_mapa" style="display: none;" value="Eliminar"/>
+							<!--
+							<button type="submit"  id="id_del_mapa" style="display: none;">
+								Eliminar
+							</button>
+						-->
+							{% endifequal %}
+							<img align="right" id='img_tabla_color'>
+						</div>
+						
+					</div>
+					<div id="div_info" style="display:none; width: 100%; padding-top: 50px">
+						<div style="float: left; width: 30%">
+							Data Type: <span id="datatype"></span>
+						</div>
+						<div style="float: left; width: 70%">
+							Range of data:  min = <span id='min'> </span> max = <span id='max'></span>
+						</div>
+						<div style="clear: both; padding-top: 10px">
+							N: <span id='north' style="padding-right: 30px"></span> S: <span id='south' style="padding-right: 30px"></span> Res:<span id='nsres' ></span>
+						</div>
+						<div style="clear: both; padding-top: 10px">
+							E: <span id='east' style="padding-right: 30px"></span> O: <span id='west' style="padding-right: 30px"></span> Res:<span id='ewres'></span>
+						</div>
+					</div>
+				</div>
+				{% ifequal rol ROL.OPERADOR %}
+				<div id="continua">
+					{%include "app/ordenamiento/grafica.html"%}
+				</div>
+				<div id="discreta" style="overflow:auto;height: 500px;">
+					{%include "app/ordenamiento/funcion_discreta.html"%}
+				</div>
+				
+				<div id="aptitud" >
+					<div style="height: 510px;overflow: auto">
+						<table id="tbl_mapa_valor" class="lista" >
+							<thead>
+								<tr>
+									<th>Mapa Valor</th>
+									<th>Actividad</th>
+									<th>Atributo</th>
+									<th>Peso</th>
+									<th>Seleccionar</th>
+								</tr>
+							</thead>
+							<tbody></tbody>
+						</table>
+					</div>
+					<div align="center" style="padding-top: 20px">
+						<button id='btn_mapa_aptitud'>
+							Generar mapa aptitud
+						</button>
+					</div>
+				</div>
+				{% endifequal %}
+				<!--
+				<div id="empty_aptitud" >
+					<div style="height: 510px;overflow: auto">
+						Antes de poder generar un mapa de aptitud es necesario haber generado antes mapas funci&oacute;n valor
+					</div>
+				</div>
+			-->
+				
+				<div id="preparacion">
+					{% ifequal rol ROL.OPERADOR %}
+					<div class="tool-capa" id="rad_preparacion">
+						<!--
+						<input type="radio" id="rad_calculadora" name="rad_grp_preparacion" checked="checked" />
+						<label for="rad_calculadora">Calculadora</label>
+						-->
+						<!--
+						<input type="radio" id="rad_operacion" name="rad_grp_preparacion" />
+						<label for="rad_operacion">Operaciones b&aacute;sicas</label>
+						-->
+						<!--
+						<input type="radio" id="rad_terminal" name="rad_grp_preparacion" />
+						<label for="rad_terminal">Terminal de grass</label>
+						-->
+					</div>
+					<!--
+					<div id="div_calculadora" style="display: table; margin: auto; width: 100% ; ">
+						<div style="float: left;width: 20%">
+							<select id="" multiple="multiple" style="width: 100%; height: 300px" >
+								<optgroup label="PERMANENT">
+									<option >bahias</option>
+									<option >carretera</option>
+								</optgroup>
+								<optgroup label="Demo">
+									<option>localidad</option>
+									<option>pendiente</option>
+								</optgroup>
+							</select>
+						</div>
+						
+						<div style="float: left; width: 70%; padding-left: 10px">
+							{%include "app/ordenamiento/calculadora.html"%}
+						</div>
+						
+					</div>
+					-->
+					{% endifequal %}
+					<div id="terminal_grass" style="display:none"></div>
+					<div id="div_operacion" style="display: none;table; width: 100%">
+						<ul  class="comando">
+							{{fcmd.as_ul}}
+						</ul>
+						<div style="clear: both; text-align: center;padding-top: 30px">
+							<p id="txt_cmd">
+								Crea una nueva capa calculando distancias a algún punto, línea o porlígono.
+							</p>
+						</div>
+						<div style="clear: both; text-align: center;padding-top: 30px;padding-bottom: 30px">
+							<button id="id_evaluar_cmd">
+								Evaluar
+							</button>
+						</div>
+						<div style="overflow: auto;height: 300px;">
+							<table id="id_estadistica" class="lista"></table>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+</div>
+{%include "app/ordenamiento/dialog.html"%}
+
+{%endblock%} 

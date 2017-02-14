@@ -1,0 +1,52 @@
+{%extends "app/base.html"%}
+{%load tag%}
+{%block head%}
+<!--
+JS ECOLOGIA
+-->
+<script src="/site_media/js/jquery.blockUI.js"></script>
+<script src="/site_media/js/ecologia-preparacion_proceso.js"></script>
+
+
+{%endblock%}
+
+{%block home%}/ecologia/preparacion/{%endblock%}
+{%block home_title%}Menu{%endblock%}
+
+{%block title%}Relaci&oacute;n operador-sector{%endblock%}
+
+{%block body_app%}
+
+<div style="display:table;width: 100%; padding-top: 5px; padding-bottom: 50px">
+	<center>
+
+		{% csrf_token %}
+		<p id="error_content" style="color: red;"></p>
+		<p id="success_content" style="color: #81017E;"></p>
+		<table class="rol">
+			{{usuariosSectorForm.as_table}}<td id='btn' colspan="2">
+			<input id="asociarBtn" type="submit" value="Asociar sector" />
+			<input type="hidden" value="{{csrf_token}}" id="csrf"/>
+			</td>
+		</table>
+		<br/>
+		<!-- relación operdor-sectores -->
+		<table id="tbl_relacion" class="lista">
+			<thead>
+				<tr>
+					<th>Operador</th>
+					<th>Sector</th>
+				</tr>
+			</thead>
+			<tbody>
+				{%for rel in usuarioSectorRelacion%}
+				<tr>
+					<td>{{rel.user.first_name}} {{rel.user.last_name}}</td>
+					<td>{{rel.sector.nombre}}</td>
+				</tr>
+				{%endfor%}
+			</tbody>
+		</table>
+	</center>
+</div>
+{%endblock%} 

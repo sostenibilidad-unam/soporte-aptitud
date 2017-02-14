@@ -1,0 +1,208 @@
+{%extends "app/ordenamiento/base.html"%}
+
+{%block head%} <!--
+JS ZOOM
+-->
+<link rel="stylesheet" href="/site_media/lib/cloud-zoom/cloud-zoom.css" type="text/css" />
+<script type="text/JavaScript" src="/site_media/lib/cloud-zoom/cloud-zoom.1.0.2.js"></script>
+<!--
+JS ECOLOGIA
+-->
+<script src="/site_media/js/ecologia-ordenamiento-util.js"></script>
+<script src="/site_media/js/ecologia-ordenamiento.js"></script>
+<script src="/site_media/js/ecologia-ordenamiento-grafica.js"></script>
+<!--
+JSPLOT
+-->
+<!--
+<script src="/site_media/lib/jqplot/jquery.jqplot.1.0.0b2_r792/dist/jquery.jqplot.min.js"></script>
+<script src="/site_media/lib/jqplot/jquery.jqplot.1.0.0b2_r792/dist/excanvas.min.js"></script>
+<script src="/site_media/lib/jqplot/jquery.jqplot.1.0.0b2_r792/dist/plugins/jqplot.highlighter.min.js"></script>
+<script src="/site_media/lib/jqplot/jquery.jqplot.1.0.0b2_r792/dist/plugins/jqplot.cursor.min.js"></script>
+<script src="/site_media/lib/jqplot/jquery.jqplot.1.0.0b2_r792/dist/plugins/jqplot.dateAxisRenderer.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/site_media/lib/jqplot/jquery.jqplot.1.0.0b2_r792/dist/jquery.jqplot.css" />
+-->
+<!--
+TERMINAL
+-->
+<script src="/site_media/lib/terminal/jquery.terminal-0.4.6.js"></script>
+<script src="/site_media/lib/terminal/jquery.mousewheel-min.js"></script>
+<!--
+<link href="/site_media/lib/terminal/jquery.terminal.css" rel="stylesheet" type="text/css"/>
+-->
+<!-- treeview scripts -->
+<link href="/site_media/js/jquery.treeview/jquery.treeview.css" rel="stylesheet"/>
+<script type="text/javascript" src="/site_media/js/jquery.treeview/lib/jquery.cookie.js"></script>
+<script type="text/javascript" src="/site_media/js/jquery.treeview/jquery.treeview.js" ></script>
+<script type="text/javascript" src="/site_media/js/jquery.treeview/jquery.treeview.edit.js"></script>
+<script type="text/javascript" src="/site_media/js/jquery.treeview/jquery.treeview.async.js"></script>
+<!-- FLOT Charts scripts -->
+<!--[if lte IE 8]><script language="javascript" type="text/javascript" src="/site_media/js/flotcharts/excanvas.min.js"></script><![endif]-->
+<script language="javascript" type="text/javascript" src="/site_media/js/flotcharts/jquery.flot.min.js"></script>
+<script language="javascript" type="text/javascript" src="/site_media/js/flotcharts/jquery.flot.stack.min.js"></script>
+<!-- Grupos -->
+<script language="javascript" type="text/javascript" src="/site_media/js/flotcharts/flot.point.cut.js"></script>
+<script language="javascript" type="text/javascript" src="/site_media/js/ecologia-grupos.js"></script>
+{%endblock%}
+
+{%block home%}
+{% ifequal rol ROL.ADMIN %}
+../menu/
+{% endifequal %}
+{%endblock%}
+{%block title%}Grupos de aptitud{%endblock%}
+{%block body_app%}
+<div  style="display: table;width:100%;  padding-top:10px">
+	<div style="display: table; width: 100%;">
+		<div style="float:left ;width: 20%">
+			<div style="float:left ;width: 20%">
+				<span>Mapas Generados:</span>
+				<div id="tree_header" style="display: none; width:100%;">
+					<a onclick="javascript:createFirstNode();" href='javascript:;' ><span id='tree_message'></span></a>
+				</div>
+				<div id='main' class='hitarea expandable-hitarea' style="overflow:auto;width:200px;"></div>
+				<div id='groups_link' style="overflow:auto;width:200px;"><a onclick="javascript:viewGroupsMap();" href='javascript:;' ><span>Ver Mapa de Grupos</span></a></div>				
+				
+			</div>
+		</div>
+		<div id="dialog" title="Si cambia el valor del punto de corte se eliminar&aacute;n todos los mapas que dependen de &eacute;ste, en caso de haberlos.">
+			¿Confirma que desea cambiar el punto de corte?
+		</div>
+		<div id="dialog_cuts" title="Aviso">
+			No hay suficientes categor&iacute;as para efectuar un corte.
+		</div>
+		<div id="dialog_missing" title="Aviso">
+			Los operadores no han generado todos los mapas de aptitud de acuerdo al n&uacute;mero de sectores.
+		</div>
+		<div id="dialog_missing_approved" title="Aviso">
+			No se han aprobado todos los mapas de aptitud. Deben estar todos aprobados para poder realizar esta acci&oacute;n
+		</div>
+		<div id="dialog_delete" title="Atencion">
+			¿Realmente quiere eliminar todos los mapas que dependen de &eacute;ste?
+		</div>
+		<div id="dialog_delete_all" title="Atencion">
+			Se borrar&aacute;n el arbol de grupos y las gr&aacute;ficas de residuales ¿Desea continuar?
+		</div>
+		<div id="dialog_delete_success" title="Atencion">
+			Ahora puede volver a iniciar el proceso con los mapas actualizados.
+		</div>
+		<div id="success_dialog" title="Aviso">
+			<span id="success_message"></span>			
+		</div>
+
+		<div style="float:right; width: 78% ;">
+			<div id="change_advice" style="display: none; width:100%;" align="center">
+					Atenci&oacute;n: hay cambios en los mapas de aptitud, se debe volver a iniciar el proceso de generaci&oacute;n de grupos de aptitud.
+					<a onclick="javascript:removeAll();" href='javascript:;' ><span id='remove_alert' style='color: red;'><br/> Click Aqu&iacute; para volver a iniciar todo.</span></a>
+			</div>
+			<div id="tbs_capa">
+				<ul>
+					<li id="li_preview">
+						<a href="javascript:;" onclick="showImage();" >Vista previa</a>
+					</li>
+					<li id="li_residuales">
+						<a href="javascript:;" onclick="showResiduales();" >Residuales de Gower</a>
+					</li>
+				</ul>
+				<div id="div_residuales" class="tool-preview">
+					<div  align='center'>
+						<table id="maps_legend"></table>
+						<br/>
+						<table id="export_buttons" style="display: none">
+							<tr>
+								<td>
+								<form action="/ecologia/export_averages/" method="POST" target="_blank">
+									{%csrf_token%}
+									<input type="submit" value="Exportar Promedios a Excel"  />
+								</form></td>
+								<td>
+								<form action="/ecologia/export_residuals/" method="POST" target="_blank">
+									{%csrf_token%}
+									<input type="submit" value="Exportar Residuales a Excel"  />
+								</form></td>
+							</tr>
+						</table>						
+						<br/>
+						<br/>
+						<div id="gower_container">
+							<!-- Here is the place for the residuals -->
+						</div>
+					</div>
+				</div>
+				<div id="div_preview">
+					<div class="tool-preview" >
+						<div id="rad_preview">
+							<input type="radio" id="rad_vista" name="rad_grp_preview" checked="checked" />
+						</div>
+						<br/>
+						<span id="name_mapa_fnValor" style="color: #81017E;font-weight: bold;text-align: center;"></span>
+						<br/>
+						<span id="minmax_mapa" style="color: #81017E;font-weight: bold;text-align: center;"></span>
+					</div>
+					<div id="div_img_capa">
+						<span><h2 id="map_title" align="center" style='display: none;'></h2></span>
+						<div style="text-align: center">
+							<a rel="position:'inside'" class="cloud-zoom" href=""> <img id="img_capa"> </a>
+							<img id="img_capa2">
+							<div id="groups_message" ></div>
+							<div align="center" id="hyst_container" style="display: none">
+								<span>Punto de corte:</span><span id="cuttingPointLabel"></span>
+								<div id="placeholder" style="width:600px;height:150px;"></div>
+								<br/>
+							</div>
+						</div>
+						<div align="center">
+							<button  id="id_zoom" style='display: none;'>
+								Zoom
+							</button>
+							<button  id="ejecutar" style="display: none;">
+								Ejecutar corte
+							</button>
+							<button  id="podar" style="display: none;">
+								Deshacer corte
+							</button>
+						</div>
+						<br/>
+						<br/>
+					</div>
+					<div id="div_info" style="display:none; width: 100%; padding-top: 50px">
+						<div style="float: left; width: 30%">
+							Data Type: <span id="datatype"></span>
+						</div>
+						<div style="float: left; width: 70%">
+							Range of data:  min = <span id='min'> </span> max = <span id='max'></span>
+						</div>
+						<div style="clear: both; padding-top: 10px">
+							N: <span id='north' style="padding-right: 30px"></span> S: <span id='south' style="padding-right: 30px"></span> Res:<span id='nsres' ></span>
+						</div>
+						<div style="clear: both; padding-top: 10px">
+							E: <span id='east' style="padding-right: 30px"></span> O: <span id='west' style="padding-right: 30px"></span> Res:<span id='ewres'></span>
+						</div>
+					</div>
+				</div>
+				<div id="preparacion" style="display:none;">
+					<div id="terminal_grass" style="display:none"></div>
+					<div id="div_operacion" style="display: none;table; width: 100%">
+						<ul  class="comando">
+							{{fcmd.as_ul}}
+						</ul>
+						<div style="clear: both; text-align: center;padding-top: 30px">
+							<p id="txt_cmd">
+								Crea una nueva capa calculando distancias a algún punto, línea o porlígono.
+							</p>
+						</div>
+						<div style="clear: both; text-align: center;padding-top: 30px;padding-bottom: 30px">
+							<button id="id_evaluar_cmd">
+								Evaluar
+							</button>
+						</div>
+						<div style="overflow: auto;height: 300px;">
+							<table id="id_estadistica" class="lista"></table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{%endblock%} 

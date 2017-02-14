@@ -1,0 +1,90 @@
+{%extends "menu/base.html"%}
+
+{%block title%}{{title}}{%endblock%}
+{%block home_title%}"Iniciar sesi&oacute;n"{%endblock%}
+
+{%block menu_body%}
+
+{% ifequal rol ROL.ROOT %}
+<div style = "display:table; width: 360px; padding-top: 50px">
+	<div style = "float:left; text-align: center; width: 40%">
+		<a href="/ecologia/registro_historico/"><img src="/site_media/img/menu_bitacora.png" title=""><span style="color: #000000"> Registro hist&oacute;rico </span></a>
+	</div>
+	<div style = "float:right; text-align: center; width: 50%">
+		<a href="/ecologia/rol/"><img src="/site_media/img/menu_rol.png" title=""> <span style="color: #000000"> Roles/Usuarios </span></a>
+	</div>
+</div>
+{% endifequal %}
+
+{% ifequal rol ROL.ROOT2 %}
+<div style = "display:table; width: 360px">
+
+	<div style = "float:left; text-align: center; width: 150px">
+		<a href="/ecologia/programa/"><img src="/site_media/img/menu_proceso.png" title=""> <span style="color: #000000"> Registro de proceso </span></a>
+	</div>
+	<div style = "float:right; text-align: center; width: 150px">
+		<a href="/ecologia/administracion/"><img src="/site_media/img/menu_administracion.png" height="128px" width="128px" title=""> <span style="color: #000000"> Administraci&oacute;n </span></a>
+	</div>
+
+	<!--
+	<div style = "float:right; text-align: center; width: 150px">
+	<a href="/ecologia/rol/"><img src="/site_media/img/menu_rol.png" title=""> <span style="color: #000000"> Roles/Usuarios </span></a>
+	</div>
+	<div style = "float:left; text-align: center; width: 150px">
+	<a href="/ecologia/programa/"><img src="/site_media/img/menu_programa.png" title=""> <span style="color: #000000"> Registro de procesos </span></a>
+	</div>
+	-->
+	<div style="clear: both; height: 20px"></div>
+	<div style = "float:left; text-align: center; width: 150px">
+		<a href="/ecologia/registro_historico/"><img src="/site_media/img/menu_bitacora.png" title=""> <span style="color: #000000"> Registro hist&oacute;rico</span></a>
+	</div>
+	<!--
+	<div style = "float:right; text-align: center; width: 150px">
+		<a href="javascript:;"><img src="/site_media/img/menu_ei.png" title=""> <span style="color: #000000"> Exportar/Importar </span></a>
+		<!--<a href="/ecologia/exportar_importar/"><img src="/site_media/img/menu_ei.png" title=""> <span style="color: #000000"> Exportar/Importar </span></a>-->
+		<!--<a href="/ecologia/app/mapa/"><img src="/site_media/img/menu_capa.png" title=""> <span style="color: #000000"> Mapas </span></a>-->
+	<!--
+	</div>
+	-->
+</div>
+{% endifequal %}
+
+{% ifequal rol ROL.ADMIN %}
+
+<div style = "display:table; width: 460px">
+
+	<div style = "float:left; text-align: center; width: 150px">
+		<a href="/ecologia/preparacion/"><img src="/site_media/img/menu_preparacion_proceso.png" height="128px" width="128px" title=""> <span style="color: #000000"> Preparaci&oacute;n proceso </span></a>
+	</div>
+	<div style = "float:left; text-align: center; width: 150px">
+		<a href="/ecologia/seguimiento_operadores/"><img src="/site_media/img/menu_rol.png" title=""> <span style="color: #000000"> Seguimiento operadores </span></a>
+	</div>
+
+	<div style = "float:left; text-align: center; width: 150px">
+		<a href="/ecologia/grupos/"><img src="/site_media/img/menu_analisis_grupos.png" height="128px" width="128px" title=""> <span style="color: #000000"> An&aacute;lisis de grupos de aptitud </span></a>
+	</div>
+	<div style="clear: both; height: 20px"></div>	
+	<div style = "float:left; text-align: center; width: 150px">
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<!--
+		<a href="javascript:;"><img src="/site_media/img/menu_ei.png" title=""> <span style="color: #000000"> Exportar/Importar </span></a>
+		-->
+		<!--<a href="/ecologia/exportar_importar/"><img src="/site_media/img/menu_ei.png" title=""> <span style="color: #000000"> Exportar/Importar </span></a>-->
+		<!--<a href="/ecologia/app/mapa/"><img src="/site_media/img/menu_capa.png" title=""> <span style="color: #000000"> Mapas </span></a>-->
+	</div>
+	<div style = "float:left; text-align: center; width: 150px">
+		<a href="/ecologia/registro_historico/"><img src="/site_media/img/menu_bitacora.png" title=""> <span style="color: #000000"> Registro hist&oacute;rico</span></a>
+	</div>
+</div>
+
+{% endifequal %}
+
+{% ifequal rol ROL.OPERADOR %}
+<div style = "display:table; width: 150px">
+	<div style = "float:left; text-align: center; width: 150px">
+		<a href="/ecologia/ordenamiento/"><img src="/site_media/img/menu_programa.png" title=""> <span style="color: #000000"> Registro de procesos </span> </a>
+	</div>
+</div>
+{% endifequal %}
+
+{%endblock%} 

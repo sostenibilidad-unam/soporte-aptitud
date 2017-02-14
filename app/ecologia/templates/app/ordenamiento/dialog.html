@@ -1,0 +1,74 @@
+<div align="center" id="dlg_actividad" title="Agregue una actividad y atributos">
+	<p>
+	</p>
+	<form id="factividad" action="" autocomplete="off">
+		{% csrf_token %}
+		<table>
+			{{fsector.as_table}}
+			{{actividad.as_table}}
+		</table>
+		<div id="btn_actividad">
+			<button>
+				Agregar atributo
+			</button>
+			<button>
+				Eliminar atributo
+			</button>
+			<!--button>
+				Importar atributo
+			</button-->
+		</div>
+		<table id="div_actividad">
+			<tbody>
+				<tr>
+					<td><label for="atributo">Atributo:</label>
+					<input type="text" name="atributo" maxlength="25"  id="atributo"   />
+					</td>
+					<td><label for="peso">Peso:</label>
+					<input type="text" style="width: 50px;" maxlength="5" name="peso" id="peso"  />
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<input  type="submit"  value="Crear actividad" />
+	</form>
+</div>
+
+
+<div id="dlg_mapa_valor" title="Nombre del mapa funci&oacute;n valor">
+	<p class="validateTips">
+	</p>
+	<center>
+		<input type="text"  id="str_mapa_valor" />
+	</center>
+</div>
+
+<div id="dlg_mapa_aptitud" title="Nombre del mapa aptitud">
+	<p class="validateTips">
+	</p>
+	<center>
+		<input type="text"  id="str_mapa_aptitud" />
+		
+	</center>
+</div>
+
+<div id="dlg_cmd" title="Nombre de la capa nueva">
+	<p class="validateTips"></p>
+	<center>
+		<input type="text" id="id_capa_out"  />
+	</center>
+</div>
+
+
+<div  id="dlg">
+	<center>
+		<p class="validateTips"></p>
+	</center>
+</div>
+
+<div id="dlg_mapa_valor_fdiscreta" title="Nombre del mapa funci&oacute;n valor">
+	<span class="validateTips" style="color: red;"></span>
+	<center>
+		<input type="text"  id="str_mapa_valor_fvalor" />
+	</center>
+</div>

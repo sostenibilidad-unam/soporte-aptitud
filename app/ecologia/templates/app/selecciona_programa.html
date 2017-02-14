@@ -1,0 +1,35 @@
+{%extends "app/base.html"%}
+{%load tag%}
+{%block head%}
+{%endblock%}
+
+{%block home%}/ecologia/menu/{%endblock%}
+{%block home_title%}Menu{%endblock%}
+
+{%block title%}Proceso de ordenamiento{%endblock%}
+
+{%block body_app%}
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#id_programas").css("width", "100px");
+		
+	});
+	
+	
+	
+</script>
+<div style = "display: table; margin-left: auto; margin-right: auto; width: 700px; padding-top: 80px">
+
+	<div style="clear: both;  padding-top: 0px; padding-bottom: 20px; text-align: center;">
+		<h2>Seleccionar para entrar</h2>
+		<br/>
+		<form action="" method="POST" style="width: 300px;height: 50px;margin-left: 200px;">
+			{% csrf_token %}
+			{{programaForm.as_p}}
+			<input type="submit" value="Entrar" />
+		</form>
+
+	</div>
+
+</div>
+{%endblock%}
